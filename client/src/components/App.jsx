@@ -8,7 +8,9 @@ class App extends React.Component {
     this.state = {
       movieData: movieData,
       search: '',
-      addMovie: ''
+      addMovie: '',
+      watched: [],
+      toWatch: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -49,6 +51,7 @@ class App extends React.Component {
     addedMovie.title = this.state.addMovie;
     addedMovie.watched = false;
     this.state.movieData.push(addedMovie);
+    this.state.toWatch.push(addedMovie);
     // console.log('new movie Data', this.state.movieData);
     this.setState({
       movieData: movieData,
@@ -59,28 +62,28 @@ class App extends React.Component {
   handleWatchClick(movie) {
     console.log('movie', movie);
     //check if toggled value is true or false
-    if (!movie.watched) {
-    // if toggled is true
-      // change toggle watch to 'watched'
-      // this.setState({
-      //   buttonText: 'Watched'
-      // })
-      movie.watched = true;
-    } else {
-      // this.setState({
-      //   buttonText: 'To Watch'
-      // })
-      movie.watched = false;
-    }
-    //else
-      // change toggle watch to 'to watch'
-    // change toggled to its opposite
-    this.setState({
-      toggled: !this.state.toggled
-    })
 
+    if (!movie.watched) {
+      movie.watched = true;
+      this.state.watched.push(movie);
+      this.setState({
+        toWatch: this.state.toWatch.filter(targetMovie => (
+        targetMovie.title !== movie.title
+      ))
+        });
+    } else {
+      movie.watched = false;
+      this.state.toWatch.push(movie);
+      this.setState({
+        watched: this.state.watched.filter(targetMovie => (
+        targetMovie.title !== movie.title
+      ))
+    })
+    console.log('watched movies', this.state.watched);
+    console.log('toWatch movies', this.state.toWatch);
     // console.log('event target', event.target);
   }
+}
 
   render() {
     return (

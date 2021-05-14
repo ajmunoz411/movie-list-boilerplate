@@ -20,6 +20,7 @@ class MovieListEntry extends React.Component {
 
   handleWatchedClick(event) {
     //check if toggled value is true or false
+    console.log('handleWatchedClick');
     if (this.state.toggled) {
     // if toggled is true
       // change toggle watch to 'watched'
@@ -46,7 +47,7 @@ class MovieListEntry extends React.Component {
       <div>
         <h2>{this.props.movie.title}</h2><button onClick={() => {
           this.props.handleWatchClick(this.props.movie);
-          this.handleWatchedClick;
+          this.handleWatchedClick(event);
         }}>{this.state.buttonText}</button><hr/>
      </div>
     )
